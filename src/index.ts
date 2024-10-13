@@ -10,6 +10,7 @@ import dateTime from './date/dateTime.js';
 import date from './date/date.js';
 import time from './date/time.js';
 import select from './select/index.js';
+import type {TableSchema} from './tables/types.js';
 
 const builtInPlugins = {Text: text};
 
@@ -31,4 +32,5 @@ export {
     select,
     tablePdfRender,
     tableUIRender,
+    TableSchema
 };

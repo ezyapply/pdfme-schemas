@@ -10,7 +10,8 @@ import dateTime from './date/dateTime.js';
 import date from './date/date.js';
 import time from './date/time.js';
 import select from './select/index.js';
+import type { TableSchema } from './tables/types.js';
 declare const builtInPlugins: {
     Text: import("@pdfme/common").Plugin<import("./text/types.js").TextSchema>;
 };
-export { builtInPlugins, text, multiVariableText, image, svg, table, barcodes, line, rectangle, ellipse, dateTime, date, time, select, tablePdfRender, tableUIRender, };
+export { builtInPlugins, text, multiVariableText, image, svg, table, barcodes, line, rectangle, ellipse, dateTime, date, time, select, tablePdfRender, tableUIRender, TableSchema };

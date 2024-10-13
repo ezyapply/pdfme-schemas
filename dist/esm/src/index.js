@@ -13,5 +13,5 @@ import select from './select/index.js';
 const builtInPlugins = { Text: text };
 export { builtInPlugins, 
 // schemas
-text, multiVariableText, image, svg, table, barcodes, line, rectangle, ellipse, dateTime, date, time, select, tablePdfRender, tableUIRender, };
+text, multiVariableText, image, svg, table, barcodes, line, rectangle, ellipse, dateTime, date, time, select, tablePdfRender, tableUIRender };
 //# sourceMappingURL=index.js.map

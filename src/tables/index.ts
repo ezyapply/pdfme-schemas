@@ -14,3 +14,4 @@ export default tableSchema;
 
 export const tablePdfRender = pdfRender
 export const tableUIRender = uiRender
+
