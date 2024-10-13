@@ -4,13 +4,14 @@ import image from './graphics/image.js';
 import svg from './graphics/svg.js';
 import barcodes from './barcodes/index.js';
 import line from './shapes/line.js';
-import table, {tablePdfRender, tableUIRender} from './tables/index.js';
+import table from './tables/index.js';
 import {ellipse, rectangle} from './shapes/rectAndEllipse.js';
 import dateTime from './date/dateTime.js';
 import date from './date/date.js';
 import time from './date/time.js';
 import select from './select/index.js';
-import type {TableSchema} from './tables/types.js';
+import groupedList from "./groupedList";
+import columnList from "./columnList";
 
 const builtInPlugins = {Text: text};
 
@@ -30,7 +31,6 @@ export {
     date,
     time,
     select,
-    tablePdfRender,
-    tableUIRender,
-    TableSchema
+    groupedList,
+    columnList,
 };

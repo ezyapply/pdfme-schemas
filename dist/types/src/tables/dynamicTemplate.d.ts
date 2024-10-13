@@ -1,4 +1,4 @@
-import { Schema, BasePdf, CommonOptions } from '@pdfme/common';
+import { BasePdf, CommonOptions, Schema } from '@pdfme/common';
 export declare const getDynamicHeightsForTable: (value: string, args: {
     schema: Schema;
     basePdf: BasePdf;
