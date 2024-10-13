@@ -78,11 +78,12 @@ async function drawTable(arg, table) {
         await drawRow(arg, table, row, cursor, table.columns);
     }
     await drawTableBorder(arg, table, startPos, cursor);
+    return cursor.y;
 }
 export const pdfRender = async (arg) => {
     const { value, schema } = arg;
     const body = getBodyWithRange(typeof value !== 'string' ? JSON.stringify(value || '[]') : value, schema.__bodyRange);
     const table = await createSingleTable(body, arg);
-    await drawTable(arg, table);
+    return await drawTable(arg, table);
 };
 //# sourceMappingURL=pdfRender.js.map

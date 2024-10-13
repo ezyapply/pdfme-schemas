@@ -361,6 +361,7 @@ const uiRender = async (arg) => {
     if (schema.height !== tableHeight && onChange) {
         onChange({ key: 'height', value: tableHeight });
     }
+    return offsetY;
 };
 exports.uiRender = uiRender;
 //# sourceMappingURL=uiRender.js.map
