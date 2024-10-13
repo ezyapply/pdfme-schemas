@@ -154,6 +154,7 @@ const renderRowUi = (args) => {
         });
         rowOffsetY += height;
     });
+    return rowOffsetY;
 };
 const headEditingPosition = { rowIndex: -1, colIndex: -1 };
 const bodyEditingPosition = { rowIndex: -1, colIndex: -1 };
@@ -184,7 +185,7 @@ const uiRender = async (arg) => {
         });
     }
     const offsetY = table.settings.showHead ? table.getHeadHeight() : 0;
-    renderRowUi({
+    const totalOffsetY = renderRowUi({
         rows: table.body,
         arg,
         editingPosition: bodyEditingPosition,
@@ -361,7 +362,7 @@ const uiRender = async (arg) => {
     if (schema.height !== tableHeight && onChange) {
         onChange({ key: 'height', value: tableHeight });
     }
-    return offsetY;
+    return totalOffsetY;
 };
 exports.uiRender = uiRender;
 //# sourceMappingURL=uiRender.js.map

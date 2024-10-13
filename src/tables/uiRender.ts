@@ -191,6 +191,7 @@ const renderRowUi = (args: {
     });
     rowOffsetY += height;
   });
+  return rowOffsetY;
 };
 
 const headEditingPosition = { rowIndex: -1, colIndex: -1 };
@@ -230,7 +231,7 @@ export const uiRender = async (arg: UIRenderProps<TableSchema>) => {
   }
 
   const offsetY = table.settings.showHead ? table.getHeadHeight() : 0;
-  renderRowUi({
+  const totalOffsetY = renderRowUi({
     rows: table.body,
     arg,
     editingPosition: bodyEditingPosition,
@@ -431,5 +432,5 @@ export const uiRender = async (arg: UIRenderProps<TableSchema>) => {
   if (schema.height !== tableHeight && onChange) {
     onChange({ key: 'height', value: tableHeight });
   }
-  return offsetY
+  return totalOffsetY
 };
