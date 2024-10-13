@@ -6,6 +6,7 @@ const helper_1 = require("./helper");
 const uiRender_1 = require("../tables/uiRender");
 const pdfRender_1 = require("../tables/pdfRender");
 const uiRender = async (arg) => {
+    console.log(arg.schema.__bodyRange);
     const { inputs, headSchema, itemsSchema } = (0, helper_1.groupBody)(arg);
     let y = arg.schema.position.y;
     for (const input of inputs) {

@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.propPanel = void 0;
 const propPanel_1 = require("../tables/propPanel");
-const groupedListSchema = { ...propPanel_1.propPanel.defaultSchema, type: 'GroupedList' };
+const groupedListSchema = { ...propPanel_1.propPanel.defaultSchema, type: 'groupedList' };
 exports.propPanel = {
     schema: () => {
         return {

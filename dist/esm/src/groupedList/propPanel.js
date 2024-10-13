@@ -1,5 +1,5 @@
 import { propPanel as tablePropPanel } from "../tables/propPanel";
-const groupedListSchema = { ...tablePropPanel.defaultSchema, type: 'GroupedList' };
+const groupedListSchema = { ...tablePropPanel.defaultSchema, type: 'groupedList' };
 export const propPanel = {
     schema: () => {
         return {

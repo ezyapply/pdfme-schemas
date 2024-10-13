@@ -5,6 +5,7 @@ const helper_1 = require("./helper");
 const uiRender_1 = require("../tables/uiRender");
 const pdfRender_1 = require("../tables/pdfRender");
 const uiRender = async (arg) => {
+    console.log(arg.schema.__bodyRange);
     const { body, tableSchema } = (0, helper_1.groupBody)(arg);
     await (0, uiRender_1.uiRender)({ ...arg, schema: tableSchema, value: JSON.stringify(body) });
 };

@@ -39,7 +39,6 @@ export function groupBody(arg: { schema: ColumnListSchema, value: string }) {
     tableSchema.head = [...new Array(schema.columnGroups).keys()].map((u, i) => `Col ${i}`)
     tableSchema.type = "table"
     tableSchema.showHead = false
-    tableSchema.__bodyRange = undefined
     tableSchema.headWidthPercentages = [...new Array(schema.columnGroups).keys()].map(_ => Math.floor(100 / schema.columnGroups))
     return {body, tableSchema};
 }

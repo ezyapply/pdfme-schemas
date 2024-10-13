@@ -23,5 +23,5 @@ export const propPanel: PropPanel<ColumnListSchema> = {
       }
     };
   },
-  defaultSchema: {...tablePropPanel.defaultSchema, type : "ColumnList", columnGroups: 3, bulletSymbol: ''},
+  defaultSchema: {...tablePropPanel.defaultSchema, type : "columnList", columnGroups: 3, bulletSymbol: '•'},
 };

@@ -3,6 +3,7 @@ import { groupBody } from "./helper";
 import { uiRender as tableUIRender } from "../tables/uiRender";
 import { pdfRender as tablePdfRender } from "../tables/pdfRender";
 export const uiRender = async (arg) => {
+    console.log(arg.schema.__bodyRange);
     const { inputs, headSchema, itemsSchema } = groupBody(arg);
     let y = arg.schema.position.y;
     for (const input of inputs) {

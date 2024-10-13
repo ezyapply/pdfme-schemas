@@ -16,7 +16,9 @@ const getDynamicHeightsForTable = async (value, args) => {
         const schema = args.schema;
         const { body, tableSchema } = (0, helper_js_2.groupBody)({ schema, value });
         const table = await (0, tableHelper_1.createSingleTable)(body, { ...args, schema: tableSchema });
-        return table.allRows().map((row) => row.height);
+        const height = table.allRows().map((row) => row.height);
+        console.log("height", height);
+        return height;
     }
     else if (args.schema.type == 'groupedList') {
         const schema = args.schema;
@@ -26,7 +28,9 @@ const getDynamicHeightsForTable = async (value, args) => {
             tables.push(await (0, tableHelper_1.createSingleTable)(input.head, { ...args, schema: headSchema }));
             tables.push(await (0, tableHelper_1.createSingleTable)(input.items, { ...args, schema: itemsSchema }));
         }
-        return tables.flatMap(u => u.allRows()).map((row) => row.height);
+        const height = tables.flatMap(u => u.allRows()).map((row) => row.height);
+        console.log("height", height);
+        return height;
     }
     return Promise.resolve([args.schema.height]);
 };
