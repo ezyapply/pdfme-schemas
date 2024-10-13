@@ -4,29 +4,31 @@ import image from './graphics/image.js';
 import svg from './graphics/svg.js';
 import barcodes from './barcodes/index.js';
 import line from './shapes/line.js';
-import table from './tables/index.js';
-import { rectangle, ellipse } from './shapes/rectAndEllipse.js';
+import table, {tablePdfRender, tableUIRender} from './tables/index.js';
+import {ellipse, rectangle} from './shapes/rectAndEllipse.js';
 import dateTime from './date/dateTime.js';
 import date from './date/date.js';
 import time from './date/time.js';
 import select from './select/index.js';
 
-const builtInPlugins = { Text: text };
+const builtInPlugins = {Text: text};
 
 export {
-  builtInPlugins,
-  // schemas
-  text,
-  multiVariableText,
-  image,
-  svg,
-  table,
-  barcodes,
-  line,
-  rectangle,
-  ellipse,
-  dateTime,
-  date,
-  time,
-  select,
+    builtInPlugins,
+    // schemas
+    text,
+    multiVariableText,
+    image,
+    svg,
+    table,
+    barcodes,
+    line,
+    rectangle,
+    ellipse,
+    dateTime,
+    date,
+    time,
+    select,
+    tablePdfRender,
+    tableUIRender,
 };
