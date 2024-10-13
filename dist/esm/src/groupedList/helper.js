@@ -28,8 +28,9 @@ export function groupBody(arg) {
     const itemsColumns = inputs.length && inputs[0].items.length ? inputs[0].items[0].length : 0;
     itemsSchema.head = [...new Array(itemsColumns).keys()].map((u, i) => `Col ${i}`);
     itemsSchema.showHead = false;
-    const columns = itemsSchema.headWidthPercentages.length;
-    itemsSchema.headWidthPercentages = [...new Array(itemsColumns).keys()].map((u, index) => index == 0 ? 5 : columns > index - 1 ? itemsSchema.headWidthPercentages[index - 1] - (5 / columns) : 95);
+    const columnsLength = itemsSchema.headWidthPercentages.length;
+    const spread = 5 / columnsLength;
+    itemsSchema.headWidthPercentages = [...new Array(itemsColumns).keys()].map((u, index) => index == 0 ? 5 : columnsLength > index - 1 ? itemsSchema.headWidthPercentages[index - 1] - spread : 95);
     return { inputs, headSchema, itemsSchema };
 }
 //# sourceMappingURL=helper.js.map
