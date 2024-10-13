@@ -20,14 +20,14 @@ export const getDynamicHeightsForTable = async (value, args) => {
     else if (args.schema.type == 'groupedList') {
         const schema = args.schema;
         const { inputs, headSchema, itemsSchema } = groupedListBody({ schema, value });
-        const tables = [];
+        const heights = [];
         for (const input of inputs) {
-            tables.push(await createSingleTable(input.head, { ...args, schema: headSchema }));
-            tables.push(await createSingleTable(input.items, { ...args, schema: itemsSchema }));
+            const table1 = await createSingleTable(input.head, { ...args, schema: headSchema });
+            const table2 = await createSingleTable(input.items, { ...args, schema: itemsSchema });
+            heights.push(table1.allRows().concat(table2.allRows()).map((row) => row.height).reduce((acc, height) => acc + height, 0));
         }
-        const height = tables.flatMap(u => u.allRows()).map((row) => row.height);
-        console.log("height", height);
-        return height;
+        console.log("height", heights);
+        return heights;
     }
     return Promise.resolve([args.schema.height]);
 };
