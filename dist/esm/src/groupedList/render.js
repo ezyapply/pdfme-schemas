@@ -31,6 +31,8 @@ async function getHeight(input, arg, schema) {
         .reduce((acc, height) => acc + height, 0);
 }
 function addPosition(schema, y) {
-    return Object.assign(cloneDeep(schema), { position: { x: schema.position.x, y } });
+    const tableSchema = cloneDeep(schema);
+    tableSchema.position.y = y;
+    return tableSchema;
 }
 //# sourceMappingURL=render.js.map

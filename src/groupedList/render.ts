@@ -38,6 +38,8 @@ async function getHeight(input: string[][], arg: PDFRenderProps<GroupedListSchem
 }
 
 function addPosition(schema: TableSchema, y: number) {
-    return Object.assign(cloneDeep(schema), {position: {x: schema.position.x, y}});
+    const tableSchema = cloneDeep(schema);
+    tableSchema.position.y = y;
+    return tableSchema;
 }
 
