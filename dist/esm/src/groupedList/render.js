@@ -4,14 +4,30 @@ import { uiRender as tableUIRender } from "../tables/uiRender";
 import { pdfRender as tablePdfRender } from "../tables/pdfRender";
 import { createSingleTable } from "../tables/tableHelper";
 export const uiRender = async (arg) => {
+    const { rootElement } = arg;
+    rootElement.innerHTML = '';
     console.log(arg.schema.__bodyRange);
     arg.schema.__bodyRange = undefined;
     const { inputs, headSchema, itemsSchema } = groupBody(arg);
     let y = arg.schema.position.y;
     for (const input of inputs) {
-        await tableUIRender({ ...arg, schema: addPosition(headSchema, y), value: JSON.stringify(input.head) });
+        let div = document.createElement('div');
+        rootElement.appendChild(div);
+        await tableUIRender({
+            ...arg,
+            rootElement: div,
+            schema: addPosition(headSchema, y),
+            value: JSON.stringify(input.head)
+        });
         y += await getHeight(input.head, arg, headSchema);
-        await tableUIRender({ ...arg, schema: addPosition(itemsSchema, y), value: JSON.stringify(input.items) });
+        div = document.createElement('div');
+        rootElement.appendChild(div);
+        await tableUIRender({
+            ...arg,
+            rootElement: div,
+            schema: addPosition(itemsSchema, y),
+            value: JSON.stringify(input.items)
+        });
         y += await getHeight(input.items, arg, itemsSchema);
     }
 };

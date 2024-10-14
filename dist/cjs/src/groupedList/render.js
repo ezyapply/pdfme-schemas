@@ -7,14 +7,30 @@ const uiRender_1 = require("../tables/uiRender");
 const pdfRender_1 = require("../tables/pdfRender");
 const tableHelper_1 = require("../tables/tableHelper");
 const uiRender = async (arg) => {
+    const { rootElement } = arg;
+    rootElement.innerHTML = '';
     console.log(arg.schema.__bodyRange);
     arg.schema.__bodyRange = undefined;
     const { inputs, headSchema, itemsSchema } = (0, helper_1.groupBody)(arg);
     let y = arg.schema.position.y;
     for (const input of inputs) {
-        await (0, uiRender_1.uiRender)({ ...arg, schema: addPosition(headSchema, y), value: JSON.stringify(input.head) });
+        let div = document.createElement('div');
+        rootElement.appendChild(div);
+        await (0, uiRender_1.uiRender)({
+            ...arg,
+            rootElement: div,
+            schema: addPosition(headSchema, y),
+            value: JSON.stringify(input.head)
+        });
         y += await getHeight(input.head, arg, headSchema);
-        await (0, uiRender_1.uiRender)({ ...arg, schema: addPosition(itemsSchema, y), value: JSON.stringify(input.items) });
+        div = document.createElement('div');
+        rootElement.appendChild(div);
+        await (0, uiRender_1.uiRender)({
+            ...arg,
+            rootElement: div,
+            schema: addPosition(itemsSchema, y),
+            value: JSON.stringify(input.items)
+        });
         y += await getHeight(input.items, arg, itemsSchema);
     }
 };
