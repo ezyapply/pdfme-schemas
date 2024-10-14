@@ -8,22 +8,21 @@ const pdfRender_1 = require("../tables/pdfRender");
 const tableHelper_1 = require("../tables/tableHelper");
 const uiRender = async (arg) => {
     const { rootElement } = arg;
-    rootElement.innerHTML = '';
-    console.log(arg.schema.__bodyRange);
-    arg.schema.__bodyRange = undefined;
     const { inputs, headSchema, itemsSchema } = (0, helper_1.groupBody)(arg);
     let y = arg.schema.position.y;
     for (const input of inputs) {
-        let div = document.createElement('div');
-        rootElement.appendChild(div);
+        let height = await getHeight(input.head, arg, headSchema);
+        let div = (0, helper_1.createDiv)(headSchema, height, y);
+        rootElement.appendChild((0, helper_1.createDiv)(headSchema, height, y));
         await (0, uiRender_1.uiRender)({
             ...arg,
             rootElement: div,
             schema: addPosition(headSchema, y),
             value: JSON.stringify(input.head)
         });
-        y += await getHeight(input.head, arg, headSchema);
-        div = document.createElement('div');
+        y += height;
+        height = await getHeight(input.items, arg, itemsSchema);
+        div = (0, helper_1.createDiv)(itemsSchema, height, y);
         rootElement.appendChild(div);
         await (0, uiRender_1.uiRender)({
             ...arg,
@@ -31,7 +30,7 @@ const uiRender = async (arg) => {
             schema: addPosition(itemsSchema, y),
             value: JSON.stringify(input.items)
         });
-        y += await getHeight(input.items, arg, itemsSchema);
+        y += height;
     }
 };
 exports.uiRender = uiRender;

@@ -33,4 +33,14 @@ export function groupBody(arg) {
     itemsSchema.headWidthPercentages = [...new Array(itemsColumns).keys()].map((u, index) => index == 0 ? 5 : columnsLength > index - 1 ? itemsSchema.headWidthPercentages[index - 1] - spread : 95);
     return { inputs, headSchema, itemsSchema };
 }
+export const createDiv = (schema, height, rowOffsetY) => {
+    const div = document.createElement('div');
+    div.style.position = 'absolute';
+    div.style.top = `${rowOffsetY}mm`;
+    div.style.left = `${0}mm`;
+    div.style.width = `${schema.width}mm`;
+    div.style.height = `${height}mm`;
+    div.style.boxSizing = 'border-box';
+    return div;
+};
 //# sourceMappingURL=helper.js.map

@@ -1,6 +1,6 @@
 import {cloneDeep, type PDFRenderProps, UIRenderProps} from "@pdfme/common";
 import {GroupedListSchema} from "./types";
-import {groupBody} from "./helper";
+import {createDiv, groupBody} from "./helper";
 import {TableSchema} from "../tables/types";
 import {uiRender as tableUIRender} from "../tables/uiRender";
 import {pdfRender as tablePdfRender} from "../tables/pdfRender";
@@ -9,22 +9,21 @@ import {createSingleTable} from "../tables/tableHelper";
 
 export const uiRender = async (arg: UIRenderProps<GroupedListSchema>) => {
     const {rootElement} = arg
-    rootElement.innerHTML = '';
-    console.log(arg.schema.__bodyRange)
-    arg.schema.__bodyRange = undefined
     const {inputs, headSchema, itemsSchema} = groupBody(arg);
     let y = arg.schema.position.y
     for (const input of inputs) {
-        let div = document.createElement('div');
-        rootElement.appendChild(div)
+        let height = await getHeight(input.head, arg, headSchema)
+        let div = createDiv(headSchema, height, y);
+        rootElement.appendChild(createDiv(headSchema, height, y))
         await tableUIRender({
             ...arg,
             rootElement: div,
             schema: addPosition(headSchema, y),
             value: JSON.stringify(input.head)
         });
-        y += await getHeight(input.head, arg, headSchema)
-        div = document.createElement('div');
+        y += height
+        height = await getHeight(input.items, arg, itemsSchema)
+        div = createDiv(itemsSchema, height, y);
         rootElement.appendChild(div)
         await tableUIRender({
             ...arg,
@@ -32,7 +31,7 @@ export const uiRender = async (arg: UIRenderProps<GroupedListSchema>) => {
             schema: addPosition(itemsSchema, y),
             value: JSON.stringify(input.items)
         });
-        y += await getHeight(input.items, arg, itemsSchema)
+        y += height
     }
 
 }

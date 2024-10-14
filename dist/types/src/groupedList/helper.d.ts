@@ -17,3 +17,4 @@ export declare function groupBody(arg: {
     headSchema: TableSchema;
     itemsSchema: TableSchema;
 };
+export declare const createDiv: (schema: TableSchema, height: number, rowOffsetY: number) => HTMLDivElement;

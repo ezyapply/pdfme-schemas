@@ -23,7 +23,8 @@ const getDynamicHeightsForTable = async (value, args) => {
     else if (args.schema.type == 'groupedList') {
         const schema = args.schema;
         const { inputs, headSchema, itemsSchema } = (0, helper_1.groupBody)({ schema, value });
-        const heights = [];
+        //has 0 height for the head
+        const heights = [0];
         for (const input of inputs) {
             const table1 = await (0, tableHelper_1.createSingleTable)(input.head, { ...args, schema: headSchema });
             const table2 = await (0, tableHelper_1.createSingleTable)(input.items, { ...args, schema: itemsSchema });

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.groupBody = exports.makeTableSchema = exports.getBodyWithRange = exports.getBody = void 0;
+exports.createDiv = exports.groupBody = exports.makeTableSchema = exports.getBodyWithRange = exports.getBody = void 0;
 const getBody = (value) => {
     if (typeof value === 'string') {
         return JSON.parse(value || '[]');
@@ -40,4 +40,15 @@ function groupBody(arg) {
     return { inputs, headSchema, itemsSchema };
 }
 exports.groupBody = groupBody;
+const createDiv = (schema, height, rowOffsetY) => {
+    const div = document.createElement('div');
+    div.style.position = 'absolute';
+    div.style.top = `${rowOffsetY}mm`;
+    div.style.left = `${0}mm`;
+    div.style.width = `${schema.width}mm`;
+    div.style.height = `${height}mm`;
+    div.style.boxSizing = 'border-box';
+    return div;
+};
+exports.createDiv = createDiv;
 //# sourceMappingURL=helper.js.map
