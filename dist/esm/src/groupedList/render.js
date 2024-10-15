@@ -5,12 +5,13 @@ import { pdfRender as tablePdfRender } from "../tables/pdfRender";
 import { createSingleTable } from "../tables/tableHelper";
 export const uiRender = async (arg) => {
     const { rootElement } = arg;
+    rootElement.innerHTML = '';
     const { inputs, headSchema, itemsSchema } = groupBody(arg);
     let y = arg.schema.position.y;
     for (const input of inputs) {
         let height = await getHeight(input.head, arg, headSchema);
         let div = createDiv(headSchema, height, y);
-        rootElement.appendChild(createDiv(headSchema, height, y));
+        rootElement.appendChild(div);
         await tableUIRender({
             ...arg,
             rootElement: div,
