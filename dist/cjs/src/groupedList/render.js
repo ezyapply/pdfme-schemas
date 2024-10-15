@@ -13,7 +13,7 @@ const uiRender = async (arg) => {
     let y = arg.schema.position.y;
     for (const input of inputs) {
         let height = await getHeight(input.head, arg, headSchema);
-        let div = (0, helper_1.createDiv)(headSchema, height, y);
+        let div = (0, helper_1.createDiv)(headSchema, height, y - arg.schema.position.y);
         rootElement.appendChild(div);
         await (0, uiRender_1.uiRender)({
             ...arg,
@@ -23,7 +23,7 @@ const uiRender = async (arg) => {
         });
         y += height;
         height = await getHeight(input.items, arg, itemsSchema);
-        div = (0, helper_1.createDiv)(itemsSchema, height, y);
+        div = (0, helper_1.createDiv)(itemsSchema, height, y - arg.schema.position.y);
         rootElement.appendChild(div);
         await (0, uiRender_1.uiRender)({
             ...arg,

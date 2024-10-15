@@ -14,7 +14,7 @@ export const uiRender = async (arg: UIRenderProps<GroupedListSchema>) => {
     let y = arg.schema.position.y
     for (const input of inputs) {
         let height = await getHeight(input.head, arg, headSchema)
-        let div = createDiv(headSchema, height, y);
+        let div = createDiv(headSchema, height, y - arg.schema.position.y);
         rootElement.appendChild(div)
         await tableUIRender({
             ...arg,
@@ -24,7 +24,7 @@ export const uiRender = async (arg: UIRenderProps<GroupedListSchema>) => {
         });
         y += height
         height = await getHeight(input.items, arg, itemsSchema)
-        div = createDiv(itemsSchema, height, y);
+        div = createDiv(itemsSchema, height, y - arg.schema.position.y);
         rootElement.appendChild(div)
         await tableUIRender({
             ...arg,
@@ -55,7 +55,7 @@ async function getHeight(input: string[][], arg: PDFRenderProps<GroupedListSchem
                                                              .reduce((acc, height) => acc + height, 0)
 }
 
-function addPosition(schema: TableSchema, y: number, height : number) {
+function addPosition(schema: TableSchema, y: number, height: number) {
     const tableSchema = cloneDeep(schema);
     tableSchema.position.y = y;
     tableSchema.height = height;
