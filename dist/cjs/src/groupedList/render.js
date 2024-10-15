@@ -12,22 +12,22 @@ const uiRender = async (arg) => {
     let y = arg.schema.position.y;
     for (const input of inputs) {
         let height = await getHeight(input.head, arg, headSchema);
-        let div = (0, helper_1.createDiv)(headSchema, height, y);
+        let div = document.createElement('div');
         rootElement.appendChild((0, helper_1.createDiv)(headSchema, height, y));
         await (0, uiRender_1.uiRender)({
             ...arg,
             rootElement: div,
-            schema: addPosition(headSchema, y),
+            schema: addPosition(headSchema, y, height),
             value: JSON.stringify(input.head)
         });
         y += height;
         height = await getHeight(input.items, arg, itemsSchema);
-        div = (0, helper_1.createDiv)(itemsSchema, height, y);
+        div = document.createElement('div');
         rootElement.appendChild(div);
         await (0, uiRender_1.uiRender)({
             ...arg,
             rootElement: div,
-            schema: addPosition(itemsSchema, y),
+            schema: addPosition(itemsSchema, y, height),
             value: JSON.stringify(input.items)
         });
         y += height;
@@ -38,10 +38,12 @@ const pdfRender = async (arg) => {
     const { inputs, headSchema, itemsSchema } = (0, helper_1.groupBody)(arg);
     let y = arg.schema.position.y;
     for (const input of inputs) {
-        await (0, pdfRender_1.pdfRender)({ ...arg, schema: addPosition(headSchema, y), value: JSON.stringify(input.head) });
-        y += await getHeight(input.head, arg, headSchema);
-        await (0, pdfRender_1.pdfRender)({ ...arg, schema: addPosition(itemsSchema, y), value: JSON.stringify(input.items) });
-        y += await getHeight(input.items, arg, itemsSchema);
+        let height = await getHeight(input.head, arg, headSchema);
+        await (0, pdfRender_1.pdfRender)({ ...arg, schema: addPosition(headSchema, y, height), value: JSON.stringify(input.head) });
+        y += height;
+        height = await getHeight(input.items, arg, itemsSchema);
+        await (0, pdfRender_1.pdfRender)({ ...arg, schema: addPosition(itemsSchema, y, height), value: JSON.stringify(input.items) });
+        y += height;
     }
 };
 exports.pdfRender = pdfRender;
@@ -50,9 +52,10 @@ async function getHeight(input, arg, schema) {
         .map((row) => row.height)
         .reduce((acc, height) => acc + height, 0);
 }
-function addPosition(schema, y) {
+function addPosition(schema, y, height) {
     const tableSchema = (0, common_1.cloneDeep)(schema);
     tableSchema.position.y = y;
+    tableSchema.height = height;
     return tableSchema;
 }
 //# sourceMappingURL=render.js.map
