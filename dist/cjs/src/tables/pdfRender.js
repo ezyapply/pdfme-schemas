@@ -84,13 +84,19 @@ async function drawTable(arg, table) {
         await drawRow(arg, table, row, cursor, table.columns);
     }
     await drawTableBorder(arg, table, startPos, cursor);
-    return cursor.y;
 }
 const pdfRender = async (arg) => {
     const { value, schema } = arg;
-    const body = (0, helper_1.getBodyWithRange)(typeof value !== 'string' ? JSON.stringify(value || '[]') : value, schema.__bodyRange);
-    const table = await (0, tableHelper_1.createSingleTable)(body, arg);
-    return await drawTable(arg, table);
+    let table;
+    if (arg.table) {
+        table = arg.table;
+        arg.table = undefined;
+    }
+    else {
+        const body = (0, helper_1.getBodyWithRange)(typeof value !== 'string' ? JSON.stringify(value || '[]') : value, schema.__bodyRange);
+        table = await (0, tableHelper_1.createSingleTable)(body, arg);
+    }
+    await drawTable(arg, table);
 };
 exports.pdfRender = pdfRender;
 //# sourceMappingURL=pdfRender.js.map

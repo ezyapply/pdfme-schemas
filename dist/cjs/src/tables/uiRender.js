@@ -154,7 +154,6 @@ const renderRowUi = (args) => {
         });
         rowOffsetY += height;
     });
-    return rowOffsetY;
 };
 const headEditingPosition = { rowIndex: -1, colIndex: -1 };
 const bodyEditingPosition = { rowIndex: -1, colIndex: -1 };
@@ -166,9 +165,17 @@ const resetEditingPosition = () => {
 };
 const uiRender = async (arg) => {
     const { rootElement, onChange, schema, value, mode } = arg;
-    const body = (0, helper_js_1.getBody)(value);
-    const bodyWidthRange = (0, helper_js_1.getBodyWithRange)(value, schema.__bodyRange);
-    const table = await (0, tableHelper_js_1.createSingleTable)(bodyWidthRange, arg);
+    let table;
+    let body = [];
+    let bodyWidthRange = [];
+    if (arg.table) {
+        table = arg.table;
+    }
+    else {
+        body = (0, helper_js_1.getBody)(value);
+        bodyWidthRange = (0, helper_js_1.getBodyWithRange)(value, schema.__bodyRange);
+        table = await (0, tableHelper_js_1.createSingleTable)(bodyWidthRange, arg);
+    }
     rootElement.innerHTML = '';
     const handleChangeEditingPosition = (newPosition, editingPosition) => {
         resetEditingPosition();
@@ -185,7 +192,7 @@ const uiRender = async (arg) => {
         });
     }
     const offsetY = table.settings.showHead ? table.getHeadHeight() : 0;
-    const totalOffsetY = renderRowUi({
+    renderRowUi({
         rows: table.body,
         arg,
         editingPosition: bodyEditingPosition,
@@ -362,7 +369,6 @@ const uiRender = async (arg) => {
     if (schema.height !== tableHeight && onChange) {
         onChange({ key: 'height', value: tableHeight });
     }
-    return totalOffsetY;
 };
 exports.uiRender = uiRender;
 //# sourceMappingURL=uiRender.js.map

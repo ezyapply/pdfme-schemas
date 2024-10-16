@@ -1,3 +1,2 @@
-import type { TableSchema } from './types';
-import type { PDFRenderProps } from '@pdfme/common';
-export declare const pdfRender: (arg: PDFRenderProps<TableSchema>) => Promise<number>;
+import { PDFRenderPropsWithTable, TableSchema } from './types';
+export declare const pdfRender: (arg: PDFRenderPropsWithTable<TableSchema>) => Promise<void>;

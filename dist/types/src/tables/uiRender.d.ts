@@ -1,3 +1,2 @@
-import type { UIRenderProps } from '@pdfme/common';
-import type { TableSchema } from './types.js';
-export declare const uiRender: (arg: UIRenderProps<TableSchema>) => Promise<number>;
+import { TableSchema, UIRenderPropsWithTable } from './types.js';
+export declare const uiRender: (arg: UIRenderPropsWithTable<TableSchema>) => Promise<void>;

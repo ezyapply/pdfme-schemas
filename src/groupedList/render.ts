@@ -5,6 +5,7 @@ import {TableSchema} from "../tables/types";
 import {uiRender as tableUIRender} from "../tables/uiRender";
 import {pdfRender as tablePdfRender} from "../tables/pdfRender";
 import {createSingleTable} from "../tables/tableHelper";
+import {Table} from "../tables/classes";
 
 
 export const uiRender = async (arg: UIRenderProps<GroupedListSchema>) => {
@@ -14,21 +15,25 @@ export const uiRender = async (arg: UIRenderProps<GroupedListSchema>) => {
     let y = arg.schema.position.y
     for (const input of inputs) {
         headSchema.__isSplit = input.__isSplit
-        let height = await getHeight(input.head, arg, headSchema)
+        const headTable = await createSingleTable(input.head, {...arg, schema: headSchema})
+        let height = await getHeight(headTable)
         let div = createDiv(headSchema, height, y - arg.schema.position.y);
         rootElement.appendChild(div)
         await tableUIRender({
             ...arg,
+            table: headTable,
             rootElement: div,
             schema: addPosition(headSchema, y, height),
             value: JSON.stringify(input.head)
         });
         y += height
-        height = await getHeight(input.items, arg, itemsSchema)
+        const itemsTable = await createSingleTable(input.items, {...arg, schema: itemsSchema})
+        height = await getHeight(itemsTable)
         div = createDiv(itemsSchema, height, y - arg.schema.position.y);
         rootElement.appendChild(div)
         await tableUIRender({
             ...arg,
+            table: itemsTable,
             rootElement: div,
             schema: addPosition(itemsSchema, y, height),
             value: JSON.stringify(input.items)
@@ -42,16 +47,20 @@ export const pdfRender = async (arg: PDFRenderProps<GroupedListSchema>) => {
     let y = arg.schema.position.y;
     for (const input of inputs) {
         headSchema.__isSplit = input.__isSplit
-        let height = await getHeight(input.head, arg, headSchema)
+        const headTable = await createSingleTable(input.head, {...arg, schema: headSchema})
+        let height = await getHeight(headTable)
         await tablePdfRender({
             ...arg,
+            table: headTable,
             schema: addPosition(headSchema, y, height),
             value: JSON.stringify(input.head)
         });
         y += height
-        height = await getHeight(input.items, arg, itemsSchema)
+        const itemsTable = await createSingleTable(input.items, {...arg, schema: itemsSchema})
+        height = await getHeight(itemsTable)
         await tablePdfRender({
             ...arg,
+            table: itemsTable,
             schema: addPosition(itemsSchema, y, height),
             value: JSON.stringify(input.items)
         });
@@ -59,10 +68,10 @@ export const pdfRender = async (arg: PDFRenderProps<GroupedListSchema>) => {
     }
 };
 
-async function getHeight(input: string[][], arg: PDFRenderProps<GroupedListSchema> | UIRenderProps<GroupedListSchema>, schema: TableSchema): Promise<number> {
-    return (await createSingleTable(input, {...arg, schema})).allRows()
-                                                             .map((row) => row.height)
-                                                             .reduce((acc, height) => acc + height, 0)
+async function getHeight(table: Table): Promise<number> {
+    return table.allRows()
+                .map((row) => row.height)
+                .reduce((acc, height) => acc + height, 0)
 }
 
 function addPosition(schema: TableSchema, y: number, height: number) {

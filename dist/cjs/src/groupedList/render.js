@@ -13,21 +13,25 @@ const uiRender = async (arg) => {
     let y = arg.schema.position.y;
     for (const input of inputs) {
         headSchema.__isSplit = input.__isSplit;
-        let height = await getHeight(input.head, arg, headSchema);
+        const headTable = await (0, tableHelper_1.createSingleTable)(input.head, { ...arg, schema: headSchema });
+        let height = await getHeight(headTable);
         let div = (0, helper_1.createDiv)(headSchema, height, y - arg.schema.position.y);
         rootElement.appendChild(div);
         await (0, uiRender_1.uiRender)({
             ...arg,
+            table: headTable,
             rootElement: div,
             schema: addPosition(headSchema, y, height),
             value: JSON.stringify(input.head)
         });
         y += height;
-        height = await getHeight(input.items, arg, itemsSchema);
+        const itemsTable = await (0, tableHelper_1.createSingleTable)(input.items, { ...arg, schema: itemsSchema });
+        height = await getHeight(itemsTable);
         div = (0, helper_1.createDiv)(itemsSchema, height, y - arg.schema.position.y);
         rootElement.appendChild(div);
         await (0, uiRender_1.uiRender)({
             ...arg,
+            table: itemsTable,
             rootElement: div,
             schema: addPosition(itemsSchema, y, height),
             value: JSON.stringify(input.items)
@@ -41,16 +45,20 @@ const pdfRender = async (arg) => {
     let y = arg.schema.position.y;
     for (const input of inputs) {
         headSchema.__isSplit = input.__isSplit;
-        let height = await getHeight(input.head, arg, headSchema);
+        const headTable = await (0, tableHelper_1.createSingleTable)(input.head, { ...arg, schema: headSchema });
+        let height = await getHeight(headTable);
         await (0, pdfRender_1.pdfRender)({
             ...arg,
+            table: headTable,
             schema: addPosition(headSchema, y, height),
             value: JSON.stringify(input.head)
         });
         y += height;
-        height = await getHeight(input.items, arg, itemsSchema);
+        const itemsTable = await (0, tableHelper_1.createSingleTable)(input.items, { ...arg, schema: itemsSchema });
+        height = await getHeight(itemsTable);
         await (0, pdfRender_1.pdfRender)({
             ...arg,
+            table: itemsTable,
             schema: addPosition(itemsSchema, y, height),
             value: JSON.stringify(input.items)
         });
@@ -58,8 +66,8 @@ const pdfRender = async (arg) => {
     }
 };
 exports.pdfRender = pdfRender;
-async function getHeight(input, arg, schema) {
-    return (await (0, tableHelper_1.createSingleTable)(input, { ...arg, schema })).allRows()
+async function getHeight(table) {
+    return table.allRows()
         .map((row) => row.height)
         .reduce((acc, height) => acc + height, 0);
 }
