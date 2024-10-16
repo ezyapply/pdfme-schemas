@@ -12,6 +12,7 @@ export declare function groupBody(arg: {
 }): {
     inputs: {
         head: string[][];
+        __isSplit: boolean;
         items: string[][];
     }[];
     headSchema: TableSchema;

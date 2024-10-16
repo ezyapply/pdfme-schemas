@@ -18,7 +18,7 @@ const uiRender = async (arg) => {
         await (0, uiRender_1.uiRender)({
             ...arg,
             rootElement: div,
-            schema: addPosition(headSchema, y, height),
+            schema: addPosition(headSchema, y, height, input.__isSplit),
             value: JSON.stringify(input.head)
         });
         y += height;
@@ -28,7 +28,7 @@ const uiRender = async (arg) => {
         await (0, uiRender_1.uiRender)({
             ...arg,
             rootElement: div,
-            schema: addPosition(itemsSchema, y, height),
+            schema: addPosition(itemsSchema, y, height, input.__isSplit),
             value: JSON.stringify(input.items)
         });
         y += height;
@@ -40,10 +40,18 @@ const pdfRender = async (arg) => {
     let y = arg.schema.position.y;
     for (const input of inputs) {
         let height = await getHeight(input.head, arg, headSchema);
-        await (0, pdfRender_1.pdfRender)({ ...arg, schema: addPosition(headSchema, y, height), value: JSON.stringify(input.head) });
+        await (0, pdfRender_1.pdfRender)({
+            ...arg,
+            schema: addPosition(headSchema, y, height, input.__isSplit),
+            value: JSON.stringify(input.head)
+        });
         y += height;
         height = await getHeight(input.items, arg, itemsSchema);
-        await (0, pdfRender_1.pdfRender)({ ...arg, schema: addPosition(itemsSchema, y, height), value: JSON.stringify(input.items) });
+        await (0, pdfRender_1.pdfRender)({
+            ...arg,
+            schema: addPosition(itemsSchema, y, height, input.__isSplit),
+            value: JSON.stringify(input.items)
+        });
         y += height;
     }
 };
@@ -53,10 +61,11 @@ async function getHeight(input, arg, schema) {
         .map((row) => row.height)
         .reduce((acc, height) => acc + height, 0);
 }
-function addPosition(schema, y, height) {
+function addPosition(schema, y, height, __isSplit) {
     const tableSchema = (0, common_1.cloneDeep)(schema);
     tableSchema.position.y = y;
     tableSchema.height = height;
+    tableSchema.showHead = tableSchema.showHead && !__isSplit;
     return tableSchema;
 }
 //# sourceMappingURL=render.js.map

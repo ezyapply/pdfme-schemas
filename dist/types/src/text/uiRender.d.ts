@@ -7,7 +7,7 @@ export declare const buildStyledTextContainer: (arg: UIRenderProps<TextSchema>, 
  * This function adds a workaround for Firefox to make the contentEditable element behave like 'plaintext-only'.
  */
 export declare const makeElementPlainTextContentEditable: (element: HTMLElement) => void;
-export declare const mapVerticalAlignToFlex: (verticalAlignmentValue: string | undefined) => "center" | "flex-end" | "flex-start";
+export declare const mapVerticalAlignToFlex: (verticalAlignmentValue: string | undefined) => "center" | "flex-start" | "flex-end";
 export declare const getBackgroundColor: (value: string, schema: {
     backgroundColor?: string;
 }) => string;

@@ -15,9 +15,16 @@ export const propPanel = {
                 type: 'string',
                 widget: 'lineTitle',
                 span: 6,
-            }
+            },
+            bulletWidth: {
+                title: 'Bullet Width',
+                type: 'number',
+                widget: 'inputNumber',
+                span: 6,
+                props: { min: 0 },
+            },
         };
     },
-    defaultSchema: { ...tablePropPanel.defaultSchema, type: "columnList", columnGroups: 3, bulletSymbol: '•' },
+    defaultSchema: { ...tablePropPanel.defaultSchema, type: "columnList", columnGroups: 3, bulletSymbol: '•', bulletWidth: 2 },
 };
 //# sourceMappingURL=propPanel.js.map

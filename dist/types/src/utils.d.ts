@@ -81,6 +81,6 @@ export declare const getDynamicHeightsForTable: (value: string, args: {
 export declare const addAlphaToHex: (hex: string, alphaPercentage: number) => string;
 export declare const isEditable: (mode: Mode, schema: Schema) => boolean;
 export declare const hex2RgbColor: (hexString: string | undefined) => import("@pdfme/pdf-lib").RGB | undefined;
-export declare const hex2PrintingColor: (hexString: string | undefined, colorType?: ColorType) => import("@pdfme/pdf-lib").RGB | import("@pdfme/pdf-lib").CMYK | undefined;
+export declare const hex2PrintingColor: (hexString: string | undefined, colorType?: ColorType) => import("@pdfme/pdf-lib").CMYK | import("@pdfme/pdf-lib").RGB | undefined;
 export declare const readFile: (input: File | FileList | null) => Promise<string | ArrayBuffer>;
 export declare const createErrorElm: () => HTMLDivElement;

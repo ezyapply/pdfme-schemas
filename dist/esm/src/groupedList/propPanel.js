@@ -1,5 +1,5 @@
 import { propPanel as tablePropPanel } from "../tables/propPanel";
-const groupedListSchema = { ...tablePropPanel.defaultSchema, type: 'groupedList' };
+const groupedListSchema = { ...tablePropPanel.defaultSchema };
 export const propPanel = {
     schema: () => {
         return {
@@ -16,14 +16,23 @@ export const propPanel = {
                 type: 'string',
                 widget: 'lineTitle',
                 span: 6,
-            }
+            },
+            bulletWidth: {
+                title: 'Bullet Width',
+                type: 'number',
+                widget: 'inputNumber',
+                span: 6,
+                props: { min: 0 },
+            },
         };
     },
     defaultSchema: {
         ...groupedListSchema,
+        type: 'groupedList',
         groupedListItemStyles: groupedListSchema,
         groupedListHeadStyles: groupedListSchema,
-        bulletSymbol: ''
+        bulletSymbol: '•',
+        bulletWidth: 2
     },
 };
 //# sourceMappingURL=propPanel.js.map

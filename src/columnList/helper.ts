@@ -1,6 +1,7 @@
 import {ColumnListSchema} from "./types";
 import {cloneDeep} from "@pdfme/common";
 import {TableSchema} from "../tables/types";
+import {ALIGNMENT} from "../text";
 
 function groupElements<T>(arr: T[], groupSize: number): T[][] {
     const result: T[][] = [];
@@ -13,10 +14,7 @@ function groupElements<T>(arr: T[], groupSize: number): T[][] {
 export const getBody = (value: string | string[][], groupSize: number, bulletSymbol: string): string[][] => {
     if (typeof value === 'string') {
         const parsed: string[][] = JSON.parse(value || '[]') as string[][];
-        if (parsed.find(s => s.length !== groupSize)) {
-            return groupElements(parsed.flat().map(s => `${bulletSymbol} \t ${s}`), groupSize);
-        }
-        return parsed
+        return groupElements(parsed.flat().flatMap(s => [bulletSymbol, s]), groupSize);
     } else {
         return value || []
     }
@@ -34,11 +32,22 @@ export const getBodyWithRange = (value: string | string[][],
 
 export function groupBody(arg: { schema: ColumnListSchema, value: string }) {
     const {schema, value} = arg;
-    const body = getBodyWithRange(value, schema.columnGroups, schema.bulletSymbol || '•', schema.__bodyRange);
+    const columns = schema.columnGroups * 2
+    const body = getBodyWithRange(value, columns, schema.bulletSymbol || '•', schema.__bodyRange);
     const tableSchema = cloneDeep(schema) as TableSchema;
-    tableSchema.head = [...new Array(schema.columnGroups).keys()].map((u, i) => `Col ${i}`)
+    tableSchema.head = [...new Array(columns).keys()].map((index) => `Col ${index}`)
     tableSchema.type = "table"
     tableSchema.showHead = false
-    tableSchema.headWidthPercentages = [...new Array(schema.columnGroups).keys()].map(_ => Math.floor(100 / schema.columnGroups))
+    if (schema.enhancedColumnStyles) {
+        const alignment = [...new Array(columns).keys()].reduce((acc, curr) => {
+            acc[curr] = curr % 2 == 0 ? schema.enhancedColumnStyles!.bulletColumn! : schema.enhancedColumnStyles!.nonBulletColumn!;
+            return acc;
+        }, {} as { [key: number]: ALIGNMENT });
+        tableSchema.columnStyles = {alignment: alignment}
+    }
+    const bulletWidth = schema.bulletWidth || 2
+    const percentageForEachBulletWidth = Math.floor(100 * (bulletWidth / schema.width))
+    const percentageForEachNonBulletWidth = Math.floor((100 - (percentageForEachBulletWidth * schema.columnGroups)) / schema.columnGroups)
+    tableSchema.headWidthPercentages = [...new Array(columns).keys()].map(index => index % 2 == 0 ? percentageForEachBulletWidth : percentageForEachNonBulletWidth)
     return {body, tableSchema};
 }
