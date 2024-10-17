@@ -11,7 +11,7 @@ const barcodes = constants_js_1.BARCODE_TYPES.reduce((acc, type) => Object.assig
         pdf: pdfRender_js_1.pdfRender,
         ui: uiRender_js_1.uiRender,
         propPanel: (0, propPanel_js_1.getPropPanelByBarcodeType)(type),
-        icon: type == 'qrcode' ? qrIcon : barcodeIcon
+        icon: type == 'qrcode' ? qrIcon : barcodeIcon,
     },
 }), {});
 exports.default = barcodes;

@@ -1,8 +1,7 @@
-import type {Plugin} from "@pdfme/common";
-import {pdfRender, uiRender} from "./render";
-import {GroupedListSchema} from "./types";
-import {propPanel} from "./propPanel";
-
+import type { Plugin } from '@pdfme/common';
+import { pdfRender, uiRender } from './render';
+import { GroupedListSchema } from './types';
+import { propPanel } from './propPanel';
 
 const groupedListSchema: Plugin<GroupedListSchema> = {
   pdf: pdfRender,

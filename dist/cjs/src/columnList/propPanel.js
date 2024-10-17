@@ -28,6 +28,12 @@ exports.propPanel = {
             },
         };
     },
-    defaultSchema: { ...propPanel_1.propPanel.defaultSchema, type: "columnList", columnGroups: 3, bulletSymbol: '•', bulletWidth: 2 },
+    defaultSchema: {
+        ...propPanel_1.propPanel.defaultSchema,
+        type: 'columnList',
+        columnGroups: 3,
+        bulletSymbol: '•',
+        bulletWidth: 2,
+    },
 };
 //# sourceMappingURL=propPanel.js.map

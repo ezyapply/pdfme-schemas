@@ -1,5 +1,5 @@
-import { groupBody } from "./helper";
-import { createSingleTable } from "../tables/tableHelper";
+import { groupBody } from './helper';
+import { createSingleTable } from '../tables/tableHelper';
 export async function dynamicHeights(args, value) {
     const schema = args.schema;
     const { inputs, headSchema, itemsSchema } = groupBody({ schema, value });

@@ -102,7 +102,7 @@ const getOverPosition = (textLine, calcValues) => {
  * However, this might need to be revisited for broader language support.
  */
 const isLineBreakableChar = (char) => {
-    const lineBreakableChars = [' ', '-', "\u2014", "\u2013"];
+    const lineBreakableChars = [' ', '-', '\u2014', '\u2013'];
     return lineBreakableChars.includes(char);
 };
 /**

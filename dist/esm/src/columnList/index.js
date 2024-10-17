@@ -1,5 +1,5 @@
-import { pdfRender, uiRender } from "./render";
-import { propPanel } from "./propPanel";
+import { pdfRender, uiRender } from './render';
+import { propPanel } from './propPanel';
 const listSchema = {
     pdf: pdfRender,
     ui: uiRender,

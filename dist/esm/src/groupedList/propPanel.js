@@ -1,4 +1,4 @@
-import { propPanel as tablePropPanel } from "../tables/propPanel";
+import { propPanel as tablePropPanel } from '../tables/propPanel';
 const groupedListSchema = { ...tablePropPanel.defaultSchema };
 export const propPanel = {
     schema: () => {
@@ -32,7 +32,7 @@ export const propPanel = {
         groupedListItemStyles: groupedListSchema,
         groupedListHeadStyles: groupedListSchema,
         bulletSymbol: '•',
-        bulletWidth: 2
+        bulletWidth: 2,
     },
 };
 //# sourceMappingURL=propPanel.js.map

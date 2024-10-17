@@ -1,7 +1,7 @@
-import { cloneDeep } from "@pdfme/common";
-import { uiRender as tableUIRender } from "../tables/uiRender";
-import { pdfRender as tablePdfRender } from "../tables/pdfRender";
-import { groupBody } from "./helper";
+import { cloneDeep } from '@pdfme/common';
+import { uiRender as tableUIRender } from '../tables/uiRender';
+import { pdfRender as tablePdfRender } from '../tables/pdfRender';
+import { groupBody } from './helper';
 export const uiRender = async (arg) => {
     const { rootElement } = arg;
     rootElement.innerHTML = '';
@@ -16,7 +16,7 @@ export const uiRender = async (arg) => {
             ...arg,
             rootElement: div,
             schema: addPosition(headSchema, y),
-            value: JSON.stringify(input.head)
+            value: JSON.stringify(input.head),
         });
         let height = await getHeight(headTable);
         setDivWidth(div, headSchema, height, rowOffSetY);
@@ -28,7 +28,7 @@ export const uiRender = async (arg) => {
             ...arg,
             rootElement: div,
             schema: addPosition(itemsSchema, y),
-            value: JSON.stringify(input.items)
+            value: JSON.stringify(input.items),
         });
         height = await getHeight(itemsTable);
         setDivWidth(div, itemsSchema, height, rowOffSetY);
@@ -44,19 +44,20 @@ export const pdfRender = async (arg) => {
         const headTable = await tablePdfRender({
             ...arg,
             schema: addPosition(headSchema, y),
-            value: JSON.stringify(input.head)
+            value: JSON.stringify(input.head),
         });
         y += await getHeight(headTable);
         const itemsTable = await tablePdfRender({
             ...arg,
             schema: addPosition(itemsSchema, y),
-            value: JSON.stringify(input.items)
+            value: JSON.stringify(input.items),
         });
         y += await getHeight(itemsTable);
     }
 };
 async function getHeight(table) {
-    return table.allRows()
+    return table
+        .allRows()
         .map((row) => row.height)
         .reduce((acc, height) => acc + height, 0);
 }

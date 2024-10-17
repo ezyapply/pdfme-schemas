@@ -12,10 +12,12 @@ const mapDynamicVariables = (props) => {
     if (variablesChanged) {
         changeSchemas([
             { key: 'content', value: JSON.stringify(variables), schemaId: activeSchema.id },
-            { key: 'variables', value: varNames, schemaId: activeSchema.id }
+            { key: 'variables', value: varNames, schemaId: activeSchema.id },
         ]);
     }
-    const placeholderRowEl = document.getElementById('placeholder-dynamic-var')?.closest('.ant-form-item');
+    const placeholderRowEl = document
+        .getElementById('placeholder-dynamic-var')
+        ?.closest('.ant-form-item');
     if (!placeholderRowEl) {
         throw new Error('Failed to find Ant form placeholder row to create dynamic variables inputs.');
     }
@@ -30,7 +32,9 @@ const mapDynamicVariables = (props) => {
             textarea.value = variables[variableName];
             textarea.addEventListener('change', (e) => {
                 variables[variableName] = e.target.value;
-                changeSchemas([{ key: 'content', value: JSON.stringify(variables), schemaId: activeSchema.id }]);
+                changeSchemas([
+                    { key: 'content', value: JSON.stringify(variables), schemaId: activeSchema.id },
+                ]);
             });
             const label = varRow.querySelector('label');
             label.innerText = variableName;
@@ -40,10 +44,11 @@ const mapDynamicVariables = (props) => {
     }
     else {
         const para = document.createElement('p');
-        para.innerHTML = i18n('schemas.mvt.typingInstructions')
-            + ` <code style="color:${options?.theme?.token?.colorPrimary || "#168fe3"}; font-weight:bold;">{`
-            + i18n('schemas.mvt.sampleField')
-            + '}</code>';
+        para.innerHTML =
+            i18n('schemas.mvt.typingInstructions') +
+                ` <code style="color:${options?.theme?.token?.colorPrimary || '#168fe3'}; font-weight:bold;">{` +
+                i18n('schemas.mvt.sampleField') +
+                '}</code>';
         rootElement.appendChild(para);
     }
 };
@@ -65,7 +70,7 @@ exports.propPanel = {
                         type: 'object',
                         widget: 'mapDynamicVariables',
                         bind: false,
-                        span: 24
+                        span: 24,
                     },
                     placeholderDynamicVar: {
                         title: 'Placeholder Dynamic Variable',
@@ -80,7 +85,7 @@ exports.propPanel = {
                         },
                         span: 24,
                     },
-                }
+                },
             },
         };
     },

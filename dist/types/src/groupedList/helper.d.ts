@@ -1,5 +1,5 @@
-import { GroupedItems, GroupedListSchema } from "./types";
-import { TableSchema } from "../tables/types";
+import { GroupedItems, GroupedListSchema } from './types';
+import { TableSchema } from '../tables/types';
 export declare const getBody: (value: string | GroupedItems[]) => GroupedItems[];
 export declare const getBodyWithRange: (value: string | GroupedItems[], range?: {
     start: number;

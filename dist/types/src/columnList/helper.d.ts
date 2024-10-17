@@ -1,5 +1,5 @@
-import { ColumnListSchema } from "./types";
-import { TableSchema } from "../tables/types";
+import { ColumnListSchema } from './types';
+import { TableSchema } from '../tables/types';
 export declare const getBody: (value: string | string[][], groupSize: number, bulletSymbol: string) => string[][];
 export declare const getBodyWithRange: (value: string | string[][], groupSize: number, bulletSymbol: string, range?: {
     start: number;

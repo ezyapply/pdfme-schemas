@@ -1,10 +1,10 @@
 export const substituteVariables = (text, variablesIn) => {
     if (!text) {
-        return "";
+        return '';
     }
     let substitutedText = text;
     if (variablesIn) {
-        const variables = (typeof variablesIn === "string") ? JSON.parse(variablesIn) || {} : variablesIn;
+        const variables = typeof variablesIn === 'string' ? JSON.parse(variablesIn) || {} : variablesIn;
         Object.keys(variables).forEach((variableName) => {
             // handle special characters in variable name
             const variableForRegex = variableName.replace(/[/\-\\^$*+?.()|[\]{}]/g, '\\$&');

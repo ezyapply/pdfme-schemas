@@ -1,4 +1,4 @@
-import { BasePdf, CommonOptions, Schema } from "@pdfme/common";
+import { BasePdf, CommonOptions, Schema } from '@pdfme/common';
 export declare function dynamicHeights(args: {
     schema: Schema;
     basePdf: BasePdf;

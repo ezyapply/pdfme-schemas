@@ -35,7 +35,7 @@ exports.propPanel = {
         groupedListItemStyles: groupedListSchema,
         groupedListHeadStyles: groupedListSchema,
         bulletSymbol: '•',
-        bulletWidth: 2
+        bulletWidth: 2,
     },
 };
 //# sourceMappingURL=propPanel.js.map

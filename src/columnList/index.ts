@@ -1,8 +1,7 @@
-import type {Plugin} from "@pdfme/common";
-import {pdfRender, uiRender} from "./render";
-import {ColumnListSchema} from "./types";
-import {propPanel} from "./propPanel";
-
+import type { Plugin } from '@pdfme/common';
+import { pdfRender, uiRender } from './render';
+import { ColumnListSchema } from './types';
+import { propPanel } from './propPanel';
 
 const listSchema: Plugin<ColumnListSchema> = {
   pdf: pdfRender,

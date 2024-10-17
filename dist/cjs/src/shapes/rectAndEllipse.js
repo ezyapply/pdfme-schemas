@@ -106,11 +106,11 @@ const getPropPanelSchema = (type) => ({
 exports.rectangle = {
     ...shape,
     propPanel: getPropPanelSchema('rectangle'),
-    icon: rectangleIcon
+    icon: rectangleIcon,
 };
 exports.ellipse = {
     ...shape,
     propPanel: getPropPanelSchema('ellipse'),
-    icon: ellipseIcon
+    icon: ellipseIcon,
 };
 //# sourceMappingURL=rectAndEllipse.js.map

@@ -104,7 +104,15 @@ export const createBarCode = async (arg) => {
     const { type, input, width, height, backgroundColor, barColor, textColor, includetext = DEFAULT_BARCODE_INCLUDETEXT, } = arg;
     const bcid = barCodeType2Bcid(type);
     const scale = 5;
-    const bwipjsArg = { bcid, text: input, width, height, scale, includetext, textxalign: 'center' };
+    const bwipjsArg = {
+        bcid,
+        text: input,
+        width,
+        height,
+        scale,
+        includetext,
+        textxalign: 'center',
+    };
     if (backgroundColor)
         bwipjsArg.backgroundcolor = mapHexColorForBwipJsLib(backgroundColor);
     if (barColor)

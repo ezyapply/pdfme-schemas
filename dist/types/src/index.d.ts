@@ -10,8 +10,8 @@ import dateTime from './date/dateTime.js';
 import date from './date/date.js';
 import time from './date/time.js';
 import select from './select/index.js';
-import groupedList from "./groupedList";
-import columnList from "./columnList";
+import groupedList from './groupedList';
+import columnList from './columnList';
 declare const builtInPlugins: {
     Text: import("@pdfme/common").Plugin<import("./text/types.js").TextSchema>;
 };

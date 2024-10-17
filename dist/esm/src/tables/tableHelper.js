@@ -120,7 +120,10 @@ function getTableOptions(schema, body) {
         tableLineWidth: schema.tableStyles.borderWidth,
         headStyles: mapCellStyle(schema.headStyles),
         bodyStyles: mapCellStyle(schema.bodyStyles),
-        alternateRowStyles: { backgroundColor: schema.bodyStyles.alternateBackgroundColor, fontName: schema.bodyStyles.alternateFontName || schema.bodyStyles.fontName },
+        alternateRowStyles: {
+            backgroundColor: schema.bodyStyles.alternateBackgroundColor,
+            fontName: schema.bodyStyles.alternateFontName || schema.bodyStyles.fontName,
+        },
         columnStyles,
         margin: { top: 0, right: 0, left: schema.position.x, bottom: 0 },
     };

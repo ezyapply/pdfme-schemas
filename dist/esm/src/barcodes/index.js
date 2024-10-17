@@ -9,7 +9,7 @@ const barcodes = BARCODE_TYPES.reduce((acc, type) => Object.assign(acc, {
         pdf: pdfRender,
         ui: uiRender,
         propPanel: getPropPanelByBarcodeType(type),
-        icon: type == 'qrcode' ? qrIcon : barcodeIcon
+        icon: type == 'qrcode' ? qrIcon : barcodeIcon,
     },
 }), {});
 export default barcodes;

@@ -49,7 +49,7 @@ const uiRender = async (arg) => {
 };
 exports.uiRender = uiRender;
 const formUiRender = async (arg) => {
-    const { value, schema, rootElement, onChange, stopEditing, theme, } = arg;
+    const { value, schema, rootElement, onChange, stopEditing, theme } = arg;
     const rawText = schema.text;
     if (rootElement.parentElement) {
         // remove the outline for the whole schema, we'll apply outlines on each individual variable field instead
@@ -115,7 +115,10 @@ const countUniqueVariableNames = (content) => {
  * Regex would otherwise be performed on every key press (which isn't terrible, but this code helps).
  */
 const keyPressShouldBeChecked = (event) => {
-    if (event.key == "ArrowUp" || event.key == "ArrowDown" || event.key == "ArrowLeft" || event.key == "ArrowRight") {
+    if (event.key == 'ArrowUp' ||
+        event.key == 'ArrowDown' ||
+        event.key == 'ArrowLeft' ||
+        event.key == 'ArrowRight') {
         return false;
     }
     const selection = window.getSelection();

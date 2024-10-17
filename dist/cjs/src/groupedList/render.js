@@ -19,7 +19,7 @@ const uiRender = async (arg) => {
             ...arg,
             rootElement: div,
             schema: addPosition(headSchema, y),
-            value: JSON.stringify(input.head)
+            value: JSON.stringify(input.head),
         });
         let height = await getHeight(headTable);
         setDivWidth(div, headSchema, height, rowOffSetY);
@@ -31,7 +31,7 @@ const uiRender = async (arg) => {
             ...arg,
             rootElement: div,
             schema: addPosition(itemsSchema, y),
-            value: JSON.stringify(input.items)
+            value: JSON.stringify(input.items),
         });
         height = await getHeight(itemsTable);
         setDivWidth(div, itemsSchema, height, rowOffSetY);
@@ -48,20 +48,21 @@ const pdfRender = async (arg) => {
         const headTable = await (0, pdfRender_1.pdfRender)({
             ...arg,
             schema: addPosition(headSchema, y),
-            value: JSON.stringify(input.head)
+            value: JSON.stringify(input.head),
         });
         y += await getHeight(headTable);
         const itemsTable = await (0, pdfRender_1.pdfRender)({
             ...arg,
             schema: addPosition(itemsSchema, y),
-            value: JSON.stringify(input.items)
+            value: JSON.stringify(input.items),
         });
         y += await getHeight(itemsTable);
     }
 };
 exports.pdfRender = pdfRender;
 async function getHeight(table) {
-    return table.allRows()
+    return table
+        .allRows()
         .map((row) => row.height)
         .reduce((acc, height) => acc + height, 0);
 }

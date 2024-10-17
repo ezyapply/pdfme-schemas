@@ -1,4 +1,4 @@
-import { propPanel as tablePropPanel } from "../tables/propPanel";
+import { propPanel as tablePropPanel } from '../tables/propPanel';
 export const propPanel = {
     schema: () => {
         return {
@@ -25,6 +25,12 @@ export const propPanel = {
             },
         };
     },
-    defaultSchema: { ...tablePropPanel.defaultSchema, type: "columnList", columnGroups: 3, bulletSymbol: '•', bulletWidth: 2 },
+    defaultSchema: {
+        ...tablePropPanel.defaultSchema,
+        type: 'columnList',
+        columnGroups: 3,
+        bulletSymbol: '•',
+        bulletWidth: 2,
+    },
 };
 //# sourceMappingURL=propPanel.js.map

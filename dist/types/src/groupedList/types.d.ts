@@ -1,4 +1,4 @@
-import { TableSchema } from "../tables/types";
+import { TableSchema } from '../tables/types';
 export interface GroupedListSchema extends TableSchema {
     groupedListHeadStyles: Partial<TableSchema>;
     groupedListItemStyles: Partial<TableSchema>;

@@ -10,8 +10,8 @@ import dateTime from './date/dateTime.js';
 import date from './date/date.js';
 import time from './date/time.js';
 import select from './select/index.js';
-import groupedList from "./groupedList";
-import columnList from "./columnList";
+import groupedList from './groupedList';
+import columnList from './columnList';
 const builtInPlugins = { Text: text };
 export { builtInPlugins, 
 // schemas

@@ -8,9 +8,10 @@ export const getBodyWithRange = (value, range) => {
     const body = getBody(value);
     if (!range)
         return body;
-    const flattenItems = body.flatMap(group => {
-        return group.head.map(head => ({ row: head, group }))
-            .concat(group.items.map(item => ({ row: item, group })));
+    const flattenItems = body.flatMap((group) => {
+        return group.head
+            .map((head) => ({ row: head, group }))
+            .concat(group.items.map((item) => ({ row: item, group })));
     });
     const result = flattenItems.slice(range.start, range.end);
     //recombine result
@@ -42,13 +43,17 @@ export const getBodyWithRange = (value, range) => {
     return newBody;
 };
 const toTableData = (value, bulletSymbol) => {
-    return value.map(u => {
+    return value.map((u) => {
         const { head = [], items = [], __isSplit } = u;
-        return { head, __isSplit, items: items.map(item => [bulletSymbol, item]) };
+        return { head, __isSplit, items: items.map((item) => [bulletSymbol, item]) };
     });
 };
 export const makeTableSchema = (main, partial) => {
-    return Object.assign({}, main, partial, { position: main.position, type: "table", __bodyRange: undefined });
+    return Object.assign({}, main, partial, {
+        position: main.position,
+        type: 'table',
+        __bodyRange: undefined,
+    });
 };
 export function groupBody(arg) {
     const { schema, value } = arg;
@@ -60,7 +65,7 @@ export function groupBody(arg) {
     itemsSchema.head = [...new Array(itemsColumns).keys()].map((i) => `Col ${i}`);
     itemsSchema.showHead = false;
     const columnsLength = itemsSchema.headWidthPercentages.length;
-    const percentageForBulletWidth = Math.floor(100 * (schema.bulletWidth || 2) / schema.width);
+    const percentageForBulletWidth = Math.floor((100 * (schema.bulletWidth || 2)) / schema.width);
     const spread = percentageForBulletWidth / columnsLength;
     itemsSchema.headWidthPercentages = [...new Array(itemsColumns).keys()].map((u, index) => index == 0 ? percentageForBulletWidth : itemsSchema.headWidthPercentages[index - 1] - spread);
     return { inputs, headSchema, itemsSchema };
