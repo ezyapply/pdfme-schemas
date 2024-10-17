@@ -1,10 +1,10 @@
 import type {Mode, UIRenderProps} from '@pdfme/common';
 import {px2mm} from '@pdfme/common';
-import {CellStyle, Styles, TableSchema, UIRenderPropsWithTable} from './types.js';
+import {CellStyle, Styles, TableSchema} from './types.js';
 import {createSingleTable} from './tableHelper.js';
 import {getBody, getBodyWithRange} from './helper.js';
 import cell from './cell.js';
-import {Row, Table} from './classes';
+import {Row} from './classes';
 
 const buttonSize = 30;
 
@@ -202,18 +202,11 @@ const resetEditingPosition = () => {
     bodyEditingPosition.colIndex = -1;
 };
 
-export const uiRender = async (arg: UIRenderPropsWithTable<TableSchema>) => {
+export const uiRender = async (arg: UIRenderProps<TableSchema>) => {
     const {rootElement, onChange, schema, value, mode} = arg;
-    let table: Table;
-    let body : string[][] = []
-    let bodyWidthRange : string[][] = []
-    if (arg.table) {
-        table = arg.table;
-    } else {
-        body = getBody(value);
-        bodyWidthRange = getBodyWithRange(value, schema.__bodyRange);
-        table = await createSingleTable(bodyWidthRange, arg);
-    }
+    const body = getBody(value);
+    const bodyWidthRange = getBodyWithRange(value, schema.__bodyRange);
+    const table = await createSingleTable(bodyWidthRange, arg);
 
     rootElement.innerHTML = '';
 
@@ -438,4 +431,5 @@ export const uiRender = async (arg: UIRenderPropsWithTable<TableSchema>) => {
     if (schema.height !== tableHeight && onChange) {
         onChange({key: 'height', value: tableHeight});
     }
+    return table
 };

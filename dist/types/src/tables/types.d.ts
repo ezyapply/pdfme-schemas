@@ -1,6 +1,5 @@
 import type { ALIGNMENT, VERTICAL_ALIGNMENT } from '../text/types';
-import type { PDFRenderProps, Schema, UIRenderProps } from '@pdfme/common';
-import { Table } from "./classes";
+import type { Schema } from '@pdfme/common';
 export type Spacing = {
     top: number;
     right: number;
@@ -85,10 +84,4 @@ export interface StylesProps {
     };
 }
 export type Section = 'head' | 'body';
-export interface PDFRenderPropsWithTable<T extends Schema> extends PDFRenderProps<T> {
-    table?: Table;
-}
-export interface UIRenderPropsWithTable<T extends Schema> extends UIRenderProps<T> {
-    table?: Table;
-}
 export {};

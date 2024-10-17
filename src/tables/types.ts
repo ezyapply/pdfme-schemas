@@ -86,10 +86,3 @@ export interface StylesProps {
 
 export type Section = 'head' | 'body';
 
-
-export interface PDFRenderPropsWithTable<T extends Schema> extends PDFRenderProps<T> {
-    table?: Table
-}
-export interface UIRenderPropsWithTable<T extends Schema> extends UIRenderProps<T>{
-    table?: Table
-}

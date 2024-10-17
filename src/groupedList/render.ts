@@ -1,11 +1,10 @@
 import {cloneDeep, type PDFRenderProps, UIRenderProps} from "@pdfme/common";
 import {GroupedListSchema} from "./types";
-import {createDiv, groupBody} from "./helper";
 import {TableSchema} from "../tables/types";
 import {uiRender as tableUIRender} from "../tables/uiRender";
 import {pdfRender as tablePdfRender} from "../tables/pdfRender";
-import {createSingleTable} from "../tables/tableHelper";
 import {Table} from "../tables/classes";
+import {groupBody} from "./helper";
 
 
 export const uiRender = async (arg: UIRenderProps<GroupedListSchema>) => {
@@ -13,32 +12,33 @@ export const uiRender = async (arg: UIRenderProps<GroupedListSchema>) => {
     rootElement.innerHTML = ''
     const {inputs, headSchema, itemsSchema} = groupBody(arg);
     let y = arg.schema.position.y
+    let rowOffSetY = 0
     for (const input of inputs) {
         headSchema.__isSplit = input.__isSplit
-        const headTable = await createSingleTable(input.head, {...arg, schema: headSchema})
-        let height = await getHeight(headTable)
-        let div = createDiv(headSchema, height, y - arg.schema.position.y);
+        let div = document.createElement('div');
         rootElement.appendChild(div)
-        await tableUIRender({
+        const headTable: Table = await tableUIRender({
             ...arg,
-            table: headTable,
             rootElement: div,
-            schema: addPosition(headSchema, y, height),
+            schema: addPosition(headSchema, y),
             value: JSON.stringify(input.head)
         });
+        let height = await getHeight(headTable)
+        setDivWidth(div, headSchema, height, rowOffSetY)
         y += height
-        const itemsTable = await createSingleTable(input.items, {...arg, schema: itemsSchema})
-        height = await getHeight(itemsTable)
-        div = createDiv(itemsSchema, height, y - arg.schema.position.y);
+        rowOffSetY += height
+        div = document.createElement('div');
         rootElement.appendChild(div)
-        await tableUIRender({
+        const itemsTable: Table = await tableUIRender({
             ...arg,
-            table: itemsTable,
             rootElement: div,
-            schema: addPosition(itemsSchema, y, height),
+            schema: addPosition(itemsSchema, y),
             value: JSON.stringify(input.items)
         });
+        height = await getHeight(itemsTable)
+        setDivWidth(div, itemsSchema, height, rowOffSetY)
         y += height
+        rowOffSetY += height
     }
 
 }
@@ -47,24 +47,18 @@ export const pdfRender = async (arg: PDFRenderProps<GroupedListSchema>) => {
     let y = arg.schema.position.y;
     for (const input of inputs) {
         headSchema.__isSplit = input.__isSplit
-        const headTable = await createSingleTable(input.head, {...arg, schema: headSchema})
-        let height = await getHeight(headTable)
-        await tablePdfRender({
+        const headTable: Table = await tablePdfRender({
             ...arg,
-            table: headTable,
-            schema: addPosition(headSchema, y, height),
+            schema: addPosition(headSchema, y),
             value: JSON.stringify(input.head)
         });
-        y += height
-        const itemsTable = await createSingleTable(input.items, {...arg, schema: itemsSchema})
-        height = await getHeight(itemsTable)
-        await tablePdfRender({
+        y += await getHeight(headTable)
+        const itemsTable: Table = await tablePdfRender({
             ...arg,
-            table: itemsTable,
-            schema: addPosition(itemsSchema, y, height),
+            schema: addPosition(itemsSchema, y),
             value: JSON.stringify(input.items)
         });
-        y += height
+        y += await getHeight(itemsTable)
     }
 };
 
@@ -74,10 +68,19 @@ async function getHeight(table: Table): Promise<number> {
                 .reduce((acc, height) => acc + height, 0)
 }
 
-function addPosition(schema: TableSchema, y: number, height: number) {
+function addPosition(schema: TableSchema, y: number) {
     const tableSchema = cloneDeep(schema);
     tableSchema.position.y = y;
-    tableSchema.height = height;
     return tableSchema;
+}
+
+const setDivWidth = (div: HTMLDivElement, schema: TableSchema, height: number, rowOffsetY: number) => {
+    div.style.position = 'absolute';
+    div.style.top = `${rowOffsetY}mm`;
+    div.style.left = `${0}mm`;
+    div.style.width = `${schema.width}mm`;
+    div.style.height = `${height}mm`;
+    div.style.boxSizing = 'border-box';
+    return div;
 }
 

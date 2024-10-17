@@ -159,17 +159,9 @@ const resetEditingPosition = () => {
 };
 export const uiRender = async (arg) => {
     const { rootElement, onChange, schema, value, mode } = arg;
-    let table;
-    let body = [];
-    let bodyWidthRange = [];
-    if (arg.table) {
-        table = arg.table;
-    }
-    else {
-        body = getBody(value);
-        bodyWidthRange = getBodyWithRange(value, schema.__bodyRange);
-        table = await createSingleTable(bodyWidthRange, arg);
-    }
+    const body = getBody(value);
+    const bodyWidthRange = getBodyWithRange(value, schema.__bodyRange);
+    const table = await createSingleTable(bodyWidthRange, arg);
     rootElement.innerHTML = '';
     const handleChangeEditingPosition = (newPosition, editingPosition) => {
         resetEditingPosition();
@@ -363,5 +355,6 @@ export const uiRender = async (arg) => {
     if (schema.height !== tableHeight && onChange) {
         onChange({ key: 'height', value: tableHeight });
     }
+    return table;
 };
 //# sourceMappingURL=uiRender.js.map

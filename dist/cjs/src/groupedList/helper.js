@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createDiv = exports.groupBody = exports.makeTableSchema = exports.getBodyWithRange = exports.getBody = void 0;
+exports.groupBody = exports.makeTableSchema = exports.getBodyWithRange = exports.getBody = void 0;
 const getBody = (value) => {
     if (typeof value === 'string') {
         return JSON.parse(value || '[]');
@@ -46,7 +46,7 @@ const getBodyWithRange = (value, range) => {
     return newBody;
 };
 exports.getBodyWithRange = getBodyWithRange;
-const toTable = (value, bulletSymbol) => {
+const toTableData = (value, bulletSymbol) => {
     return value.map(u => {
         const { head = [], items = [], __isSplit } = u;
         return { head, __isSplit, items: items.map(item => [bulletSymbol, item]) };
@@ -59,7 +59,7 @@ exports.makeTableSchema = makeTableSchema;
 function groupBody(arg) {
     const { schema, value } = arg;
     const bodyWidthRange = (0, exports.getBodyWithRange)((0, exports.getBody)(value), schema.__bodyRange);
-    const inputs = toTable(bodyWidthRange, schema.bulletSymbol || '•');
+    const inputs = toTableData(bodyWidthRange, schema.bulletSymbol || '•');
     const headSchema = (0, exports.makeTableSchema)(schema, schema.groupedListHeadStyles);
     const itemsSchema = (0, exports.makeTableSchema)(schema, schema.groupedListItemStyles);
     const itemsColumns = inputs.length && inputs[0].items.length ? inputs[0].items[0].length : 0;
@@ -72,15 +72,4 @@ function groupBody(arg) {
     return { inputs, headSchema, itemsSchema };
 }
 exports.groupBody = groupBody;
-const createDiv = (schema, height, rowOffsetY) => {
-    const div = document.createElement('div');
-    div.style.position = 'absolute';
-    div.style.top = `${rowOffsetY}mm`;
-    div.style.left = `${0}mm`;
-    div.style.width = `${schema.width}mm`;
-    div.style.height = `${height}mm`;
-    div.style.boxSizing = 'border-box';
-    return div;
-};
-exports.createDiv = createDiv;
 //# sourceMappingURL=helper.js.map

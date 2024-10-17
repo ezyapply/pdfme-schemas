@@ -41,7 +41,7 @@ export const getBodyWithRange = (value, range) => {
     });
     return newBody;
 };
-const toTable = (value, bulletSymbol) => {
+const toTableData = (value, bulletSymbol) => {
     return value.map(u => {
         const { head = [], items = [], __isSplit } = u;
         return { head, __isSplit, items: items.map(item => [bulletSymbol, item]) };
@@ -53,7 +53,7 @@ export const makeTableSchema = (main, partial) => {
 export function groupBody(arg) {
     const { schema, value } = arg;
     const bodyWidthRange = getBodyWithRange(getBody(value), schema.__bodyRange);
-    const inputs = toTable(bodyWidthRange, schema.bulletSymbol || '•');
+    const inputs = toTableData(bodyWidthRange, schema.bulletSymbol || '•');
     const headSchema = makeTableSchema(schema, schema.groupedListHeadStyles);
     const itemsSchema = makeTableSchema(schema, schema.groupedListItemStyles);
     const itemsColumns = inputs.length && inputs[0].items.length ? inputs[0].items[0].length : 0;
@@ -65,14 +65,4 @@ export function groupBody(arg) {
     itemsSchema.headWidthPercentages = [...new Array(itemsColumns).keys()].map((u, index) => index == 0 ? percentageForBulletWidth : itemsSchema.headWidthPercentages[index - 1] - spread);
     return { inputs, headSchema, itemsSchema };
 }
-export const createDiv = (schema, height, rowOffsetY) => {
-    const div = document.createElement('div');
-    div.style.position = 'absolute';
-    div.style.top = `${rowOffsetY}mm`;
-    div.style.left = `${0}mm`;
-    div.style.width = `${schema.width}mm`;
-    div.style.height = `${height}mm`;
-    div.style.boxSizing = 'border-box';
-    return div;
-};
 //# sourceMappingURL=helper.js.map

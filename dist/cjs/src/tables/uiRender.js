@@ -165,17 +165,9 @@ const resetEditingPosition = () => {
 };
 const uiRender = async (arg) => {
     const { rootElement, onChange, schema, value, mode } = arg;
-    let table;
-    let body = [];
-    let bodyWidthRange = [];
-    if (arg.table) {
-        table = arg.table;
-    }
-    else {
-        body = (0, helper_js_1.getBody)(value);
-        bodyWidthRange = (0, helper_js_1.getBodyWithRange)(value, schema.__bodyRange);
-        table = await (0, tableHelper_js_1.createSingleTable)(bodyWidthRange, arg);
-    }
+    const body = (0, helper_js_1.getBody)(value);
+    const bodyWidthRange = (0, helper_js_1.getBodyWithRange)(value, schema.__bodyRange);
+    const table = await (0, tableHelper_js_1.createSingleTable)(bodyWidthRange, arg);
     rootElement.innerHTML = '';
     const handleChangeEditingPosition = (newPosition, editingPosition) => {
         resetEditingPosition();
@@ -369,6 +361,7 @@ const uiRender = async (arg) => {
     if (schema.height !== tableHeight && onChange) {
         onChange({ key: 'height', value: tableHeight });
     }
+    return table;
 };
 exports.uiRender = uiRender;
 //# sourceMappingURL=uiRender.js.map

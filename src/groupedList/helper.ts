@@ -51,7 +51,7 @@ export const getBodyWithRange = (
     return newBody;
 };
 
-const toTable = (value: GroupedItems[], bulletSymbol: string): {
+const toTableData = (value: GroupedItems[], bulletSymbol: string): {
     head: string[][],
     __isSplit: boolean,
     items: string[][]
@@ -66,11 +66,10 @@ export const makeTableSchema = (main: TableSchema, partial: Partial<TableSchema>
     return Object.assign({}, main, partial, {position: main.position, type: "table", __bodyRange: undefined})
 }
 
-
 export function groupBody(arg: { schema: GroupedListSchema, value: string }) {
     const {schema, value} = arg;
     const bodyWidthRange = getBodyWithRange(getBody(value), schema.__bodyRange);
-    const inputs = toTable(bodyWidthRange, schema.bulletSymbol || '•')
+    const inputs = toTableData(bodyWidthRange, schema.bulletSymbol || '•')
     const headSchema = makeTableSchema(schema, schema.groupedListHeadStyles)
     const itemsSchema = makeTableSchema(schema, schema.groupedListItemStyles)
     const itemsColumns = inputs.length && inputs[0].items.length ? inputs[0].items[0].length : 0
@@ -83,13 +82,3 @@ export function groupBody(arg: { schema: GroupedListSchema, value: string }) {
     return {inputs, headSchema, itemsSchema};
 }
 
-export const createDiv = (schema: TableSchema, height: number, rowOffsetY: number) => {
-    const div = document.createElement('div');
-    div.style.position = 'absolute';
-    div.style.top = `${rowOffsetY}mm`;
-    div.style.left = `${0}mm`;
-    div.style.width = `${schema.width}mm`;
-    div.style.height = `${height}mm`;
-    div.style.boxSizing = 'border-box';
-    return div;
-}

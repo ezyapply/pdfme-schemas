@@ -1,4 +1,4 @@
-import {PDFRenderPropsWithTable, TableSchema} from './types';
+import {TableSchema} from './types';
 import type {PDFRenderProps} from '@pdfme/common';
 import {Cell, Column, Row, Table} from './classes';
 import {rectangle} from '../shapes/rectAndEllipse';
@@ -107,19 +107,13 @@ async function drawTable(arg: PDFRenderProps<TableSchema>, table: Table) {
     await drawTableBorder(arg, table, startPos, cursor);
 }
 
-export const pdfRender = async (arg: PDFRenderPropsWithTable<TableSchema>) => {
+export const pdfRender = async (arg: PDFRenderProps<TableSchema>) => {
     const {value, schema} = arg;
-
-    let table: Table;
-    if (arg.table) {
-        table = arg.table;
-        arg.table = undefined
-    } else {
-        const body = getBodyWithRange(
-            typeof value !== 'string' ? JSON.stringify(value || '[]') : value,
-            schema.__bodyRange
-        );
-        table = await createSingleTable(body, arg);
-    }
+    const body = getBodyWithRange(
+        typeof value !== 'string' ? JSON.stringify(value || '[]') : value,
+        schema.__bodyRange
+    );
+    const table = await createSingleTable(body, arg);
     await drawTable(arg, table);
+    return table
 };

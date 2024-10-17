@@ -81,15 +81,9 @@ async function drawTable(arg, table) {
 }
 export const pdfRender = async (arg) => {
     const { value, schema } = arg;
-    let table;
-    if (arg.table) {
-        table = arg.table;
-        arg.table = undefined;
-    }
-    else {
-        const body = getBodyWithRange(typeof value !== 'string' ? JSON.stringify(value || '[]') : value, schema.__bodyRange);
-        table = await createSingleTable(body, arg);
-    }
+    const body = getBodyWithRange(typeof value !== 'string' ? JSON.stringify(value || '[]') : value, schema.__bodyRange);
+    const table = await createSingleTable(body, arg);
     await drawTable(arg, table);
+    return table;
 };
 //# sourceMappingURL=pdfRender.js.map
